@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* Bot -Dspring.server.port=$PORT
+web: java $JAVA_OPTS -Dspring.server.port=$PORT -cp target/classes:target/dependency/* Bot
