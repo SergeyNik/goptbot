@@ -39,7 +39,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>Bot</mainClass>
+                            <mainClass>com.goptyabrskybot.Bot</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
