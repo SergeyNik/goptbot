@@ -1,1 +1,1 @@
-web: java $JVM_OPTS -jar target/goptbot-1.0-SNAPSHOT.jar
+web: java $JVM_OPTS -Dserver.port=$PORT -jar target/goptbot-1.0-SNAPSHOT.jar
