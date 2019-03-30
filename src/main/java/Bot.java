@@ -11,6 +11,9 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -21,6 +24,7 @@ public class Bot extends TelegramLongPollingBot {
     private static Logger log = Logger.getLogger(Bot.class.getName());
     private static final String TOKEN = System.getenv("TOKEN");
     private static final String BOT_USERNAME = System.getenv("BOT_USERNAME");
+    private static final String PORT = System.getenv("PORT");
 
     // receive message
     public void onUpdateReceived(Update update) {
@@ -103,6 +107,12 @@ public class Bot extends TelegramLongPollingBot {
             log.log(Level.INFO, "Register successful!");
         } catch (TelegramApiRequestException e) {
             log.log(Level.SEVERE, "Register failed: ", e);
+        }
+
+        try (ServerSocket serverSocket = new ServerSocket(Integer.valueOf(PORT))) {
+            Socket clientSocket = serverSocket.accept();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
