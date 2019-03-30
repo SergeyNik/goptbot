@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dserver.port=$PORT -cp target/classes:target/dependency/* Bot
+web: java $JVM_OPTS -jar target/goptbot-1.0-SNAPSHOT.jar
