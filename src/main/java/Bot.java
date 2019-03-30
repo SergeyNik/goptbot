@@ -1,4 +1,3 @@
-import lombok.extern.java.Log;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
@@ -15,9 +14,11 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
-@Log
+//@Log
 public class Bot extends TelegramLongPollingBot {
+    private static Logger log = Logger.getLogger(Bot.class.getName());
     private static final String TOKEN = System.getenv("TOKEN");
     private static final String BOT_USERNAME = System.getenv("BOT_USERNAME");
 
@@ -88,9 +89,9 @@ public class Bot extends TelegramLongPollingBot {
 
     public static void main(String[] args) {
         // TOR
-//        System.getProperties().put("proxySet", "true");
-//        System.getProperties().put("socksProxyHost", "127.0.0.1");
-//        System.getProperties().put("socksProxyPort", "9050");
+        System.getProperties().put("proxySet", "true");
+        System.getProperties().put("socksProxyHost", "127.0.0.1");
+        System.getProperties().put("socksProxyPort", "9050");
         // ------------------------------------------------------
 
 

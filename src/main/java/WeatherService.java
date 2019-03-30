@@ -1,16 +1,16 @@
-import lombok.extern.java.Log;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.json.JSONObject;
-import sun.awt.Symbol;
 
 import java.io.IOException;
 import java.util.Objects;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
-@Log
+//@Log
 public class WeatherService {
+    private static Logger log = Logger.getLogger(WeatherService.class.getName());
     private static final String URL_WEATHER_OKTYABRSKY =
             "https://api.openweathermap.org/data/2.5/weather?lat=54.4871&lon=53.4294&units=metric&appid=4fa2c8b174a41896bd35edb7a29485ff";
     private OkHttpClient client = new OkHttpClient();
