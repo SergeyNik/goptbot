@@ -110,7 +110,9 @@ public class Bot extends TelegramLongPollingBot {
         }
 
         try (ServerSocket serverSocket = new ServerSocket(Integer.valueOf(PORT))) {
-            Socket clientSocket = serverSocket.accept();
+            while (true) {
+                Socket clientSocket = serverSocket.accept();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
