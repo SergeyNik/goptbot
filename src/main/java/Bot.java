@@ -19,12 +19,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-//@Log
+
 public class Bot extends TelegramLongPollingBot {
     private static Logger log = Logger.getLogger(Bot.class.getName());
+
     private static final String TOKEN = System.getenv("TOKEN");
     private static final String BOT_USERNAME = System.getenv("BOT_USERNAME");
     private static final String PORT = System.getenv("PORT");
+    private static final String SLEEP_TIME = System.getenv("SLEEP");
 
     // receive message
     public void onUpdateReceived(Update update) {
@@ -92,29 +94,25 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     public static void main(String[] args) {
-        // TOR
-//        System.getProperties().put("proxySet", "true");
-//        System.getProperties().put("socksProxyHost", "127.0.0.1");
-//        System.getProperties().put("socksProxyPort", "9050");
-        // ------------------------------------------------------
-
+        TorProxySettings.configure(false);
 
         ApiContextInitializer.init();
         TelegramBotsApi api = new TelegramBotsApi();
         try {
             log.log(Level.INFO, "Try to register!");
             api.registerBot(new Bot());
-            log.log(Level.INFO, "Register successful!");
+            log.log(Level.INFO, "Registration completed successfully!");
         } catch (TelegramApiRequestException e) {
             log.log(Level.SEVERE, "Register failed: ", e);
         }
 
-        try (ServerSocket serverSocket = new ServerSocket(Integer.valueOf(PORT))) {
+        try (ServerSocket serverSocket = new ServerSocket(Integer.parseInt(PORT))) {
             while (true) {
                 Socket clientSocket = serverSocket.accept();
+                Thread.sleep(Integer.parseInt(SLEEP_TIME));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException | InterruptedException e) {
+            log.log(Level.SEVERE, "Server error ", e);
         }
     }
 }
