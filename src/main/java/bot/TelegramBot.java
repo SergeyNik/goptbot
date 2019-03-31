@@ -13,6 +13,7 @@ import service.WeatherService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,33 +29,6 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     @Override
-    public void onUpdateReceived(Update update) {
-        Message message = update.getMessage();
-        if (message == null || !message.hasText()) {
-            return;
-        }
-
-        String codeword = message.getText();
-
-        // new user in group
-        List<User> newChatMembers = message.getNewChatMembers();
-        if (newChatMembers != null && !newChatMembers.isEmpty()) {
-            for (User user : newChatMembers) {
-                sendMessage(message, "Дарова епта " + user.getUserName() + " эээээээээ" );
-            }
-        }
-
-        // commands
-        if ("/help".equals(codeword)) {
-            sendMessage(message, "What can I do for you?");
-        } else if ("/settings".equals(codeword)) {
-            sendMessage(message, "What will configure?");
-        } else if ("погода".equalsIgnoreCase(codeword)) {
-            sendMessage(message, new WeatherService().getWeather());
-        }
-    }
-
-    @Override
     public String getBotUsername() {
         return BOT_USERNAME;
     }
@@ -64,7 +38,30 @@ public class TelegramBot extends TelegramLongPollingBot {
         return TOKEN;
     }
 
-    private void sendMessage(Message message, String text) {
+    @Override
+    public void onUpdateReceived(Update update) {
+        Message message = update.getMessage();
+        if (message == null || !message.hasText()) {
+            return;
+        }
+
+        String codeword = message.getText();
+
+        // new user in group
+
+        List<User> newChatMembers = message.getNewChatMembers();
+        newChatMembers.stream().filter(Objects::nonNull)
+                .forEach(user -> send(message, user.getUserName() + " присоединился!"));
+
+        // commands
+        if ("/help".equals(codeword)) {
+            // do help
+        } else if ("погода".equalsIgnoreCase(codeword)) {
+            send(message, new WeatherService().getWeather());
+        }
+    }
+
+    private void send(Message message, String text) {
         SendMessage msg = new SendMessage();
         msg.enableMarkdown(true);
         msg.setChatId(message.getChatId().toString());
@@ -87,7 +84,6 @@ public class TelegramBot extends TelegramLongPollingBot {
         List<KeyboardRow> keyboardRowList = new ArrayList<>();
         KeyboardRow firstRow = new KeyboardRow();
 //        firstRow.add(new KeyboardButton("/help"));
-//        firstRow.add(new KeyboardButton("/settings"));
         firstRow.add(new KeyboardButton("Погода"));
         keyboardRowList.add(firstRow);
         keyboardMarkup.setKeyboard(keyboardRowList);
