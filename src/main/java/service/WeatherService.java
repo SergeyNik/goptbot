@@ -1,3 +1,6 @@
+package service;
+
+import model.Model;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -8,7 +11,7 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-//@Log
+
 public class WeatherService {
     private static Logger log = Logger.getLogger(WeatherService.class.getName());
     private static final String URL_WEATHER_OKTYABRSKY =

@@ -1,5 +1,7 @@
-class TorProxySettings {
-    static void configure(boolean flag) {
+package settings;
+
+public class TorProxySettings {
+    public static void configure(boolean flag) {
         if (flag) {
             System.getProperties().put("proxySet", "true");
             System.getProperties().put("socksProxyHost", "127.0.0.1");
