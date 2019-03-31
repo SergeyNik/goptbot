@@ -12,9 +12,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import service.Weather;
 import service.OpenWeatherMap;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -52,7 +50,11 @@ public class TelegramBot extends TelegramLongPollingBot {
         // new user in group
 
         List<User> newChatMembers = message.getNewChatMembers();
-        newChatMembers.stream().filter(Objects::nonNull)
+
+        Optional.ofNullable(newChatMembers)
+                .orElseGet(Collections::emptyList)
+                .stream()
+                .filter(Objects::nonNull)
                 .forEach(user -> send(message, user.getUserName() + " присоединился!"));
 
         // commands
