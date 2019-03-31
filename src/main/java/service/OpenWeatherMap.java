@@ -12,10 +12,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class WeatherService {
-    private static Logger log = Logger.getLogger(WeatherService.class.getName());
+public class OpenWeatherMap implements Weather {
+    private static Logger log = Logger.getLogger(OpenWeatherMap.class.getName());
     private static final String URL_WEATHER_OKTYABRSKY =
-            "https://api.openweathermap.org/data/2.5/weather?lat=54.4871&lon=53.4294&units=metric&appid=4fa2c8b174a41896bd35edb7a29485ff";
+            "https://api.openweathermap.org/data/2.5/weather?" +
+                    "lat=54.4871&lon=53.4294" +
+                    "&units=metric" +
+                    "&appid=4fa2c8b174a41896bd35edb7a29485ff";
     private OkHttpClient client = new OkHttpClient();
 
     private String getWeatherInfo() throws IOException {
@@ -28,6 +31,7 @@ public class WeatherService {
         }
     }
 
+    @Override
     public String getWeather() {
         Model model = new Model();
         try {

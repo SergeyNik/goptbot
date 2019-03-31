@@ -9,7 +9,8 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import service.WeatherService;
+import service.Weather;
+import service.OpenWeatherMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     private final String TOKEN;
     private final String BOT_USERNAME;
+    private Weather weather = new OpenWeatherMap();
 
     public TelegramBot(String token, String username) {
         this.TOKEN = token;
@@ -57,7 +59,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         if ("/help".equals(codeword)) {
             // do help
         } else if ("погода".equalsIgnoreCase(codeword)) {
-            send(message, new WeatherService().getWeather());
+            send(message, weather.getWeather());
         }
     }
 
